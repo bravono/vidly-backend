@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
+const { Customer, validate } = require("../modules");
 const express = require("express");
-const Joi = require("joi");
 const func = require("joi/lib/types/func");
 const router = express.Router();
 
@@ -10,7 +9,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { error } = valdiateCustomer(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let customer = new Customer({
@@ -24,7 +23,7 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { error } = valdiateCustomer(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const customer = await Customer.findByIdAndUpdate(
@@ -64,15 +63,5 @@ router.get("/:id", async (req, res) => {
 
   res.send(customer);
 });
-
-function valdiateCustomer(customer) {
-  const schema = {
-    isGold: Joi.Boolean(),
-    name: Joi.String().min(5).max(50).requred(),
-    phone: Joi.String().min(11),
-  };
-
-  return Joi.validate(customer, schema);
-}
 
 module.exports = router;
