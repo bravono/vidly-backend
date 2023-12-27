@@ -29,4 +29,4 @@ function validateMovie(movie) {
 }
 
 exports.Movie = Movie;
-exports.validateMovie = validate;
+module.exports.validateMovie;

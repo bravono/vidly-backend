@@ -21,4 +21,4 @@ function valdiateCustomer(customer) {
 }
 
 exports.Customer = Customer;
-exports.valdiateCustomer = validate;
+module.exports.valdiateCustomer;

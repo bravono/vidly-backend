@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const rentalSchema = new mongoose.Schema({
   custome: {
-    type: new mongoose.schema({
+    type: new mongoose.Schema({
       name: {
         type: String,
         trim: true,
@@ -71,4 +71,4 @@ function validateRental(rental) {
 }
 
 exports.Rental = Rental;
-exports.validateRental = validate;
+module.exports.validateRental;

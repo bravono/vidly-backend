@@ -1,4 +1,4 @@
-const { Rental, validate } = require("../models/rental");
+const { Rental, validateRental } = require("../models/rental");
 const { Customer } = require("../models/customer");
 const { Movie } = require("../models/movie");
 const mongoose = require("mongoose");
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { error } = validate(req.params.id);
+  const { error } = validateRental(req.params.id);
   if (error) return res.status(400).send(error.details[0].message);
 
   const customer = await Customer.findById(req.body.customerId);
@@ -51,4 +51,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-exports.router = router;
+module.exports = router;
