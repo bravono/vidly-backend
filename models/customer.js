@@ -12,13 +12,13 @@ const Customer = mongoose.model(
 
 function valdiateCustomer(customer) {
   const schema = {
-    isGold: Joi.Boolean(),
-    name: Joi.String().min(5).max(50).requred(),
-    phone: Joi.String().min(11),
+    isGold: Joi.boolean(),
+    name: Joi.string().min(5).max(50).required(),
+    phone: Joi.string().min(11),
   };
 
   return Joi.validate(customer, schema);
 }
 
 exports.Customer = Customer;
-module.exports.valdiateCustomer;
+module.exports.validate = valdiateCustomer;

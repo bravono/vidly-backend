@@ -1,14 +1,14 @@
-const { Genre, validateGenre } = require("../models/genre");
+const { Genre, validate } = require("../models/genre");
 const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const genres = await Genre.findById().sort("name");
+  const genres = await Genre.find().sort("name");
   res.send(genres);
 });
 
 router.post("/", async (req, res) => {
-  const { error } = validateGenre(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const genre = new Genre({ name: req.body.name });
@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { error } = valdiate(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const genre = await Genre.findByIdAndUpdate(

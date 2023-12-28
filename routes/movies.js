@@ -1,16 +1,16 @@
-const Genre = require("../models/genre");
-const { Movie, validateMovie } = require("../models/movie");
+const { Genre } = require("../models/genre");
+const { Movie, validate } = require("../models/movie");
 const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const movies = await Movie.findById().sort("name");
+  const movies = await Movie.find().sort("name");
 
   res.send(movies);
 });
 
 router.post("/", async (req, res) => {
-  const { error } = validateMovie(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const genre = await Genre.findById(req.body.genreId);
@@ -39,11 +39,15 @@ router.put("/:id", async (req, res) => {
     req.params.id,
     {
       title: req.body.title,
+      genreId: req.body.genreId,
       numberInStock: req.body.numberInStock,
+      dailyRentalRate: req.body.dailyRentalRate,
     },
     { new: true }
   );
 
   if (!movie) return res.send("There is no such movie in the database");
+
+  res.send(movie);
 });
 module.exports = router;

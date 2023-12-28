@@ -1,9 +1,8 @@
 const Joi = require("joi");
-const date = require("joi/lib/types/date");
 const mongoose = require("mongoose");
 
 const rentalSchema = new mongoose.Schema({
-  custome: {
+  customer: {
     type: new mongoose.Schema({
       name: {
         type: String,
@@ -71,4 +70,4 @@ function validateRental(rental) {
 }
 
 exports.Rental = Rental;
-module.exports.validateRental;
+module.exports.validate = validateRental;

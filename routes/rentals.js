@@ -1,4 +1,4 @@
-const { Rental, validateRental } = require("../models/rental");
+const { Rental, validate } = require("../models/rental");
 const { Customer } = require("../models/customer");
 const { Movie } = require("../models/movie");
 const mongoose = require("mongoose");
@@ -9,13 +9,13 @@ const router = express.Router();
 Fawn.init(mongoose);
 
 router.get("/", async (req, res) => {
-  const rentals = await Rental.findById().sort("-dateOut");
+  const rentals = await Rental.find().sort("-dateOut");
 
   res.send(rentals);
 });
 
 router.post("/", async (req, res) => {
-  const { error } = validateRental(req.params.id);
+  const { error } = validate(req.params.id);
   if (error) return res.status(400).send(error.details[0].message);
 
   const customer = await Customer.findById(req.body.customerId);
