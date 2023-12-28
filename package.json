@@ -16,6 +16,6 @@
     "joi": "^13.1.0",
     "joi-objectid": "^4.0.2",
     "mongodb": "6.3",
-    "mongoose": "^5.0.1"
+    "mongoose": "^5.13.21"
   }
 }
