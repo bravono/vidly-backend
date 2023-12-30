@@ -51,4 +51,48 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { error } = validate(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const customer = await Customer.find(req.body.customerId);
+  if (!customer) return res.status(400).send("Invalid Customer");
+
+  const movie = await Movie.find(req.body.movieId);
+  if (!movie) return res.status(400).send("Invalid Movie");
+
+  let rental = await Rental.findByIdAndUpdate(
+    req.params.id,
+    {
+      customerId: req.body.customerId,
+      movieId: req.body.movieId,
+    },
+    { new: true }
+  );
+
+  try {
+    new Fawn.Task().save("rentals", rental).run();
+  } catch (ex) {
+    res.status(500).send("Something Failed");
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const rental = await Rental.findByIdAndRemove(req.params.id);
+
+  if (!rental)
+    return res.status(404).send("There is no such rental in the database");
+
+  res.send(rental);
+});
+
+router.get("/:id", async (req, res) => {
+  const rental = await Rental.findById(req.params.id);
+
+  if (!rental)
+    return res.status(404).send("There is no such rental in the database");
+
+  res.send(rental);
+});
+
 module.exports = router;
