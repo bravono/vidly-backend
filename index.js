@@ -8,7 +8,7 @@ const customers = require("./routes/customers");
 const movies = require("./routes/movies");
 const rentals = require("./routes/rentals");
 const users = require("./routes/users");
-const logins = require("./routes/logins");
+const Auth = require("./routes/auth");
 const express = require("express");
 const app = express();
 
@@ -24,7 +24,7 @@ app.use("/api/customers", customers);
 app.use("/api/rentals", rentals);
 app.use("/api/movies", movies);
 app.use("/api/users", users);
-app.use("/api/logins", logins);
+app.use("/api/auth", Auth);
 
 const port = process.env.PORT || 5000;
 app.listen(5000, () => {
