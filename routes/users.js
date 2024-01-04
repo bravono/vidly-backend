@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const bcrypt = require("bcryptjs");
 const { User, validate } = require("../models/user");
 const mongoose = require("mongoose");
@@ -24,7 +26,9 @@ router.post("/", async (req, res) => {
   user.password = hashed;
 
   await user.save();
-  res.send(user);
+
+  const token = user.generateAuthToken();
+  res.header("x-auth-token", token).send(user);
 });
 
 module.exports = router;
