@@ -1,3 +1,4 @@
+const auth = require("../middleware/auth");
 const { Rental, validate } = require("../models/rental");
 const { Customer } = require("../models/customer");
 const { Movie } = require("../models/movie");
@@ -14,7 +15,7 @@ router.get("/", async (req, res) => {
   res.send(rentals);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validate(req.params.id);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -51,7 +52,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const { error } = validate(req.params.id);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -61,19 +62,15 @@ router.put("/:id", async (req, res) => {
   const movie = await Movie.find(req.body.movieId);
   if (!movie) return res.status(400).send("Invalid Movie");
 
-  let rental = await Rental.findByIdAndUpdate(
-    req.params.id,
-    {
-      customerId: req.body.customerId,
-      movieId: req.body.movieId,
-    },
-    { new: true }
-  );
+  let rental = await Rental.findByIdAndUpdate(req.params.id, {
+    customerId: req.body.customerId,
+    movieId: req.body.movieId,
+  });
 
   try {
     new Fawn.Task().save("rentals", rental).run();
   } catch (ex) {
-    res.status(500).send("Something Failed");
+    return res.status(500).send("Something Failed");
   }
 });
 
