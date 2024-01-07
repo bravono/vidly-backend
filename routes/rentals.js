@@ -1,3 +1,4 @@
+const admin = require("../middleware/auth");
 const auth = require("../middleware/auth");
 const { Rental, validate } = require("../models/rental");
 const { Customer } = require("../models/customer");
@@ -74,7 +75,7 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", [auth, admin], async (req, res) => {
   const rental = await Rental.findByIdAndRemove(req.params.id);
 
   if (!rental)
