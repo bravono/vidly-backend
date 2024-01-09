@@ -1,4 +1,5 @@
 require("dotenv").config();
+const error = require("./middleware/error");
 const config = require("config");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
@@ -31,6 +32,7 @@ app.use("/api/rentals", rentals);
 app.use("/api/movies", movies);
 app.use("/api/users", users);
 app.use("/api/auth", Auth);
+app.use(error);
 
 const port = process.env.PORT || 5000;
 app.listen(5000, () => {
