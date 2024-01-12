@@ -1,17 +1,15 @@
-const asyncMiddleware = require("../middleware/async");
+require("express-async-errors");
 const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
 const { Genre, validate } = require("../models/genre");
 const express = require("express");
 const router = express.Router();
 
-router.get(
-  "/",
-  asyncMiddleware(async (req, res) => {
-    const genres = await Genre.find().sort("name");
-    res.send(genres);
-  })
-);
+router.get("/", async (req, res) => {
+  throw new Error("Could not get genres");
+  const genres = await Genre.find().sort("name");
+  res.send(genres);
+});
 
 router.post("/", auth, async (req, res) => {
   const { error } = validate(req.body);
