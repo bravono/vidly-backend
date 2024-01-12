@@ -1,4 +1,5 @@
 require("express-async-errors");
+const asyncMiddleware = require("../middleware/async");
 const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
 const { Genre, validate } = require("../models/genre");
