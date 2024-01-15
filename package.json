@@ -21,7 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "6.3",
     "mongoose": "^5.13.21",
-    "winston": "^2.4.7",
+    "winston": "^2.4.0",
+    "winston-mongodb": "^5.1.1",
     "winston-transport": "^4.6.0"
   }
 }
