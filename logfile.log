@@ -15,3 +15,5 @@
 {"level":"info","message":"Connected to MongoDB","timestamp":"2024-01-16T10:42:31.658Z"}
 {"level":"info","message":"Listening on port 5000...","timestamp":"2024-01-16T10:43:03.916Z"}
 {"level":"info","message":"Connected to MongoDB","timestamp":"2024-01-16T10:43:03.954Z"}
+{"level":"info","message":"Listening on port 5000...","timestamp":"2024-01-16T10:54:41.665Z"}
+{"level":"info","message":"Connected to MongoDB","timestamp":"2024-01-16T10:54:41.705Z"}
