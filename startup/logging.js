@@ -24,6 +24,7 @@ module.exports = function () {
         db: "mongodb://localhost/vidly",
         collection: "log",
         // Other MongoDB connection options if needed
+        options: { useUnifiedTopology: true },
       }),
     ],
     level: "error  ", // Only log errors
