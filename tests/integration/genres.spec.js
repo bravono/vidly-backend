@@ -1,4 +1,5 @@
 const { Genre } = require("../../models/genre");
+const { User } = require("../../models/user");
 const request = require("supertest");
 let server;
 
@@ -38,6 +39,40 @@ describe("/api/genres", () => {
     it("Should return 404 if invalid ID is passed", async () => {
       const res = await request(server).get("/api/genre/1");
       expect(res.status).toBe(404);
+    });
+  });
+  describe("POST /", () => {
+    it("should return a 401 if client is not logged in", async () => {
+      const res = await request(server)
+        .post("/api/genres")
+        .send({ name: "genre1" });
+      expect(res.status).toBe(401);
+    });
+  });
+  describe("POST /", () => {
+    it("should return 400 if the genre is less than 5 character", async () => {
+      const token = new User().generateAuthToken();
+
+      const res = await request(server)
+        .post("/api/genres")
+        .set("x-auth-token", token)
+        .send({ name: "1234" });
+
+      expect(res.status).toBe(400);
+    });
+  });
+  describe("POST /", () => {
+    it("should return 400 if the genre is more than 50 characters", async () => {
+      const token = new User().generateAuthToken();
+
+      const name = new Array(52).join("a");
+
+      const res = await request(server)
+        .post("/api/genres")
+        .set("x-auth-token", token)
+        .send({ name: name });
+
+      expect(res.status).toBe(400);
     });
   });
 });
